@@ -116,7 +116,9 @@ namespace AlgorithmsServer.Controllers
                 var argg = new Object[] { imgpath, name.ToString(), key, (int)AesMode.ImageEncryption };
 
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
-                return Ok(result);
+
+                var getImage = System.IO.File.OpenRead(result.ToString());
+                return File(getImage, "image/jpeg");
             }
             catch (Exception ex)
             {
@@ -143,7 +145,9 @@ namespace AlgorithmsServer.Controllers
                 var argg = new Object[] { imgpath, name, key, (int)AesMode.ImageDecryption };
 
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
-                return Ok(result);
+
+                var getImage = System.IO.File.OpenRead(result.ToString());
+                return File(getImage, "image/jpeg");
             }
             catch (Exception ex)
             {
