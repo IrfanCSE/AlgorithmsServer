@@ -332,13 +332,13 @@ def message_encryption(message, key):
 
     msg = ""
     for i in range(padded_msg_len):
-        msg+= str(encryted_msg[i])+" "
+        msg += str(encryted_msg[i])+" "
 
     return msg
 
 
 def message_decryption(message, key):
-    
+
     msgSplited = message.split()
     msgMaped = map(int, msgSplited)
     message = list(msgMaped)
@@ -358,90 +358,98 @@ def message_decryption(message, key):
         padded_msg += 0
     #padded_msg = message + chr(0)*(padded_msg_len - msg_len)
     decryted_msg = []
-    msg =""
+    msg = ""
 
     # Decrypt Encrypted message
     for i in range(0, padded_msg_len, 16):
         decryted_msg += aes_decrypt(padded_msg[i:], key)
 
-    # print("\nDecrypted message: ", end=" ")
     for i in range(msg_len):
-        # print(chr(decryted_msg[i]), end="")
-        msg+=chr(decryted_msg[i])
-    # print("\n\n")
-    return msg
+        msg += chr(decryted_msg[i])
+
+    return msg.replace("\0", "")
 
 
-# def image_encryption():
-#     path = "pepper.jpg"
-#     #key = key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-#     print("\nEnter key: ")
-#     key = [int(k) for k in input().split()]
-#     # open file for reading purpose
-#     fin = open(path, 'rb')
-#     # storing image data in variable "image"
-#     image = fin.read()
-#     fin.close()
-#     image = bytearray(image)
-#     img_len = len(image)
-#     padded_img_len = img_len
-#     if (img_len % 16 != 0):
-#         padded_img_len = (int)(img_len/16 + 1) * 16
-#     # add padding to byte array
-#     for i in range(padded_img_len - img_len):
-#         image += bytes([0])
+def image_encryption(path, name, key):
+    # path = "Python/Images/pepper.jpg"
+    # name="8b392d93-df23-4054-a163-6d0c0777a340_Screenshot from 2021-07-16 12-41-09.png"
+    # path = "Python/Images/8b392d93-df23-4054-a163-6d0c0777a340_Screenshot from 2021-07-16 12-41-09.png"
+    # open file for reading purpose
+    fin = open(path, 'rb')
+    # storing image data in variable "image"
+    image = fin.read()
+    fin.close()
+    image = bytearray(image)
 
-#     encrypted_img = []
-#     for i in range(0, padded_img_len, 16):
-#         encrypted_img += aes_encrypt(image[i:], key)
-#     encrypted_img = bytearray(encrypted_img)
-#     # opening file for writting purpose
-#     fin = open("encrypted_image.jpg", 'wb')
-#     # writing encrypted data in image
-#     fin.write(encrypted_img)
-#     fin.close()
-#     print('Encryption Done...')
-#     return
+    keySplited = key.split()
+    keyMaped = map(int, keySplited)
+    key = list(keyMaped)
+
+    img_len = len(image)
+    padded_img_len = img_len
+    if (img_len % 16 != 0):
+        padded_img_len = (int)(img_len/16 + 1) * 16
+    # add padding to byte array
+    for i in range(padded_img_len - img_len):
+        image += bytes([0])
+
+    encrypted_img = []
+    for i in range(0, padded_img_len, 16):
+        encrypted_img += aes_encrypt(image[i:], key)
+    encrypted_img = bytearray(encrypted_img)
+    # opening file for writting purpose
+    outPath = "Python/Images/Encrypt/"+name
+    fin = open(outPath, 'wb')
+    # writing encrypted data in image
+    fin.write(encrypted_img)
+    fin.close()
+    return outPath
 
 
-# def image_decryption():
-#     path = "encrypted_image.jpg"
-#     #key = key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-#     print("\nEnter key: ")
-#     key = [int(k) for k in input().split()]
-#     # open file for reading purpose
-#     fin = open(path, 'rb')
-#     # storing image data in variable "image"
-#     image = fin.read()
-#     fin.close()
-#     image = bytearray(image)
-#     img_len = len(image)
-#     padded_img_len = img_len
-#     if (img_len % 16 != 0):
-#         padded_img_len = (int)(img_len/16 + 1) * 16
-#     # add padding to byte array
-#     for i in range(padded_img_len - img_len):
-#         image += bytes([0])
+def image_decryption(path, name, key):
+    # path = "Python/Images/Encrypt/8b392d93-df23-4054-a163-6d0c0777a340_Screenshot from 2021-07-16 12-41-09.png"
+    # name ="8b392d93-df23-4054-a163-6d0c0777a340_Screenshot from 2021-07-16 12-41-09.png"
+    # key = key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+    # print("\nEnter key: ")
+    # key = [int(k) for k in input().split()]
+    # open file for reading purpose
 
-#     decrypted_img = []
-#     for i in range(0, padded_img_len, 16):
-#         decrypted_img += aes_decrypt(image[i:], key)
+    keySplited = key.split()
+    keyMaped = map(int, keySplited)
+    key = list(keyMaped)
 
-#     i = padded_img_len-1
-#     j = 0
-#     while(decrypted_img[i]== 0):
-#         i-=1
-#         j+=1
+    fin = open(path, 'rb')
+    # storing image data in variable "image"
+    image = fin.read()
+    fin.close()
+    image = bytearray(image)
+    img_len = len(image)
+    padded_img_len = img_len
+    if (img_len % 16 != 0):
+        padded_img_len = (int)(img_len/16 + 1) * 16
+    # add padding to byte array
+    for i in range(padded_img_len - img_len):
+        image += bytes([0])
 
-#     decrypted_img = decrypted_img[:padded_img_len-j]
-#     decrypted_img = bytearray(decrypted_img)
-#     # opening file for writting purpose
-#     fin = open("decrypted_image.jpg", 'wb')
-#     # writing encrypted data in image
-#     fin.write(decrypted_img)
-#     fin.close()
-#     print('Decryption Done...')
-#     return
+    decrypted_img = []
+    for i in range(0, padded_img_len, 16):
+        decrypted_img += aes_decrypt(image[i:], key)
+
+    i = padded_img_len-1
+    j = 0
+    while(decrypted_img[i] == 0):
+        i -= 1
+        j += 1
+
+    decrypted_img = decrypted_img[:padded_img_len-j]
+    decrypted_img = bytearray(decrypted_img)
+    # opening file for writting purpose
+    outName = "Python/Images/Decrypt/"+name
+    fin = open(outName, 'wb')
+    # writing encrypted data in image
+    fin.write(decrypted_img)
+    fin.close()
+    return outName
 
 
 # ---------------               Main Function                 -----------------------
@@ -476,12 +484,16 @@ class AES:
         elif(mode == 2):
             return message_decryption(message, key)
 
-        # elif(mode==3):
-        #     return image_encryption(message,key)
+    def CallImg(self, imgpath, name, key, mode):
+        if(mode == 3):
+            return image_encryption(imgpath,name,key)
 
-        # elif(mode==4):
-        #     return  image_encryption(message,key)
+        elif(mode == 4):
+            return image_decryption(imgpath,name,key)
 
 
 # msg = AES.Call("142 58 23 148 137 155 161 96 242 21 31 22 100 97 253 4","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",2)
+# print(msg)
+
+# msg = AES.CallImg("","","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",4)
 # print(msg)
