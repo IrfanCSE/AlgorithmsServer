@@ -1,4 +1,4 @@
-class MainFunc:
+class testFunc:
     def __init__(self):
         pass
 

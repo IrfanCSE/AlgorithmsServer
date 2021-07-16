@@ -62,7 +62,8 @@ namespace AlgorithmsServer.Helper
 
             var pythonClass = _engine.Operations.Invoke(scope.GetVariable(Class));
 
-            return _engine.Operations.InvokeMember(pythonClass, Method,arguments);
+            var outa = _engine.Operations.InvokeMember(pythonClass, Method,arguments);
+            return outa;
 
         }
 

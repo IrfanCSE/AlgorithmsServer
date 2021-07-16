@@ -10,7 +10,7 @@ class Main:
     def fun(self,val):
         output = "Hello From Python"
         ex = self.run()
-        out = MainFunc().run()
+        out = testFunc().run()
         output += val
         return output+ex+out
 

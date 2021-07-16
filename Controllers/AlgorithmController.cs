@@ -51,5 +51,46 @@ namespace AlgorithmsServer.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet]
+        [Route("EncryptionMessage")]
+        public async Task<IActionResult> EncryptionMessage(string message,string key)
+        {
+            var path = PythonFile.AES;
+            var className = "AES";
+            var MethodName = "Call";
+            var argg = new Object[]{message,key,(int)AesMode.MessageEncryption};
+            try
+            {
+                var result = _script.RunFromFunc(path, className, MethodName,argg);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet]
+        [Route("DecryptionMessage")]
+        public async Task<IActionResult> DecryptionMessage(string message,string key)
+        {
+            var path = PythonFile.AES;
+            var className = "AES";
+            var MethodName = "Call";
+            var argg = new Object[]{message,key,(int)AesMode.MessageDecryption};
+            try
+            {
+                var result = _script.RunFromFunc(path, className, MethodName,argg);
+                result = result.ToString().Replace("\0","");
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
