@@ -35,7 +35,8 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
-
+*.png
+*.jpg
 
 
 
