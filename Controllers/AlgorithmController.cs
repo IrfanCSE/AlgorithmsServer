@@ -23,38 +23,10 @@ namespace AlgorithmsServer.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> Get()
+        [Route("test")]
+        public async Task<IActionResult> test(string key)
         {
-            var path = PythonFile.Test;
-            var input = new List<KeyValue>();
-            var output = new List<KeyValue>();
-            output.Add(new KeyValue { Key = "output", Value = "c#" });
-
-            var result = _script.RunFromString(path, input, output);
-            var value = result.Find(x => x.Key == "output");
-            return Ok(value.Value.ToString());
-        }
-
-        [HttpGet]
-        [Route("getFunc")]
-        public async Task<IActionResult> getFunc()
-        {
-            var path = PythonFile.Test;
-            var className = "Main";
-            var MethodName = "fun";
-            var argg = new Object[] { "C#" };
-            // argg[0]="c#";
-            try
-            {
-                var result = _script.RunFromFunc(path, className, MethodName, argg);
-                return Ok(result.ToString());
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return Ok(KeyGenerator.Generator(key));
         }
 
         [HttpGet]
@@ -64,11 +36,14 @@ namespace AlgorithmsServer.Controllers
             var path = PythonFile.AES;
             var className = "AES";
             var MethodName = "Call";
+            key = KeyGenerator.Generator(key);
+
             var argg = new Object[] { message, key, (int)AesMode.MessageEncryption };
             try
             {
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
-                return Ok(result);
+                var Response = new Response { Value = result.ToString() };
+                return Ok(Response);
 
             }
             catch (Exception ex)
@@ -84,12 +59,14 @@ namespace AlgorithmsServer.Controllers
             var path = PythonFile.AES;
             var className = "AES";
             var MethodName = "Call";
+            key = KeyGenerator.Generator(key);
+
             var argg = new Object[] { message, key, (int)AesMode.MessageDecryption };
             try
             {
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
-                // result = result.ToString().Replace("\0","");
-                return Ok(result);
+                var Response = new Response { Value = result.ToString() };
+                return Ok(Response);
             }
             catch (Exception ex)
             {
@@ -99,21 +76,24 @@ namespace AlgorithmsServer.Controllers
 
         [HttpPost]
         [Route("EncryptionImage")]
-        public async Task<IActionResult> EncryptionImage(IFormFile image, string key)
+        public async Task<IActionResult> EncryptionImage(IFormFile file, string key)
         {
 
             try
             {
-                if (image.ContentType != "image/png") return BadRequest("Invalid File Formate");
+                if (file == null) return BadRequest("Empty File");
+                if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
 
                 var path = PythonFile.AES;
                 var className = "AES";
                 var MethodName = "CallImg";
                 string name = "";
 
-                var imgpath = Upload.UploadedFile(image, out name);
+                key = KeyGenerator.Generator(key);
 
-                var argg = new Object[] { imgpath, name.ToString(), key, (int)AesMode.ImageEncryption };
+                var imgpath = Upload.UploadedFile(file, out name);
+
+                var argg = new Object[] { imgpath, name, key, (int)AesMode.ImageEncryption };
 
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
 
@@ -128,19 +108,22 @@ namespace AlgorithmsServer.Controllers
 
         [HttpPost]
         [Route("DecryptionImage")]
-        public async Task<IActionResult> DecryptionImage(IFormFile image, string key)
+        public async Task<IActionResult> DecryptionImage(IFormFile file, string key)
         {
 
             try
             {
-                if (image.ContentType != "image/png") return BadRequest("Invalid File Formate");
+                if (file == null) return BadRequest("Empty File");
+                if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
 
                 var path = PythonFile.AES;
                 var className = "AES";
                 var MethodName = "CallImg";
                 string name = "";
 
-                var imgpath = Upload.UploadedFile(image, out name);
+                key = KeyGenerator.Generator(key);
+
+                var imgpath = Upload.UploadedFile(file, out name);
 
                 var argg = new Object[] { imgpath, name, key, (int)AesMode.ImageDecryption };
 
