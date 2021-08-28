@@ -98,6 +98,19 @@ namespace AlgorithmsServer.Controllers
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
 
                 var getImage = System.IO.File.OpenRead(result.ToString());
+
+                var upImg = new FileInfo(imgpath);
+                if (upImg.Exists)
+                {
+                    upImg.Delete();
+                }
+
+                var encImg = new FileInfo(result.ToString());
+                if (encImg.Exists)
+                {
+                    encImg.Delete();
+                }
+
                 return File(getImage, "image/jpeg");
             }
             catch (Exception ex)
@@ -130,6 +143,19 @@ namespace AlgorithmsServer.Controllers
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
 
                 var getImage = System.IO.File.OpenRead(result.ToString());
+
+                var upImg = new FileInfo(imgpath);
+                if (upImg.Exists)
+                {
+                    upImg.Delete();
+                }
+
+                var encImg = new FileInfo(result.ToString());
+                if (encImg.Exists)
+                {
+                    encImg.Delete();
+                }
+
                 return File(getImage, "image/jpeg");
             }
             catch (Exception ex)
