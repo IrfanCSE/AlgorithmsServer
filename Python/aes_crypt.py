@@ -477,14 +477,16 @@ def image_decryption(path, name, key):
 
 
 class AES:
-    def Call(self, message, key, mode):
+    @staticmethod
+    def Call(message, key, mode):
         if(mode == 1):
             return message_encryption(message, key)
 
         elif(mode == 2):
             return message_decryption(message, key)
 
-    def CallImg(self, imgpath, name, key, mode):
+    @staticmethod
+    def CallImg( imgpath, name, key, mode):
         if(mode == 3):
             return image_encryption(imgpath,name,key)
 
@@ -494,6 +496,9 @@ class AES:
 
 # msg = AES.Call("142 58 23 148 137 155 161 96 242 21 31 22 100 97 253 4","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",2)
 # print(msg)
+
+ms = AES.Call("strin","1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4",1)
+print(ms)
 
 # msg = AES.CallImg("","","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",4)
 # print(msg)

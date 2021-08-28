@@ -38,7 +38,7 @@ namespace AlgorithmsServer.Controllers
             var MethodName = "Call";
             key = KeyGenerator.Generator(key);
 
-            var argg = new Object[] { message, key, (int)AesMode.MessageEncryption };
+            var argg = new Object[] { message.ToString(), key.ToString(), (int)AesMode.MessageEncryption };
             try
             {
                 var result = _script.RunFromFunc(path, className, MethodName, argg);
