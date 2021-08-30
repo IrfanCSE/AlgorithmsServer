@@ -14,7 +14,7 @@ namespace AlgorithmsServer.Helper
 
             if (model != null)
             {
-                string uploadsFolder = "Python/Images";
+                string uploadsFolder = "./Python/Images";
                 if (model.FileName.Length < 50)
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + model.FileName;
                 filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -23,7 +23,7 @@ namespace AlgorithmsServer.Helper
                     model.CopyTo(fileStream);
                 }
             }
-            name = uniqueFileName;
+            name = $"dif_{uniqueFileName}";
             return filePath;
         }
     }

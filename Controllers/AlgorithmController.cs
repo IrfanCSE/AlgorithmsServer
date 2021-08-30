@@ -82,7 +82,7 @@ namespace AlgorithmsServer.Controllers
             try
             {
                 if (file == null) return BadRequest("Empty File");
-                if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
+                // if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
 
                 var path = PythonFile.AES;
                 var className = "AES";
@@ -127,7 +127,7 @@ namespace AlgorithmsServer.Controllers
             try
             {
                 if (file == null) return BadRequest("Empty File");
-                if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
+                // if (file.ContentType != "image/png" && file.ContentType != "image/jpeg") return BadRequest("Invalid File Formate");
 
                 var path = PythonFile.AES;
                 var className = "AES";

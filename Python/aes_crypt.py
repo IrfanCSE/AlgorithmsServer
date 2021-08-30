@@ -398,7 +398,7 @@ def image_encryption(path, name, key):
         encrypted_img += aes_encrypt(image[i:], key)
     encrypted_img = bytearray(encrypted_img)
     # opening file for writting purpose
-    outPath = "Python/Images/Encrypt/"+name
+    outPath = "./Python/Images/"+name
     fin = open(outPath, 'wb')
     # writing encrypted data in image
     fin.write(encrypted_img)
@@ -444,7 +444,7 @@ def image_decryption(path, name, key):
     decrypted_img = decrypted_img[:padded_img_len-j]
     decrypted_img = bytearray(decrypted_img)
     # opening file for writting purpose
-    outName = "Python/Images/Decrypt/"+name
+    outName = "./Python/Images/"+name
     fin = open(outName, 'wb')
     # writing encrypted data in image
     fin.write(decrypted_img)
@@ -484,9 +484,9 @@ class AES:
 
         elif(mode == 2):
             return message_decryption(message, key)
-
+    
     @staticmethod
-    def CallImg( imgpath, name, key, mode):
+    def CallImg(imgpath, name, key, mode):
         if(mode == 3):
             return image_encryption(imgpath,name,key)
 
@@ -497,8 +497,8 @@ class AES:
 # msg = AES.Call("142 58 23 148 137 155 161 96 242 21 31 22 100 97 253 4","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",2)
 # print(msg)
 
-ms = AES.Call("strin","1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4",1)
-print(ms)
+# ms = AES.Call("strin","1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4",1)
+# print(ms)
 
-# msg = AES.CallImg("","","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",4)
+# msg = AES.CallImg("./Python/Images/acb46dcd-ce3d-46d6-b935-0053e695e321_Screenshot from 2021-05-20 18-33-23.png","enc.png","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",3)
 # print(msg)
