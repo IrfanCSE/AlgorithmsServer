@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AlgorithmsServer.ErrorHandling;
 using AlgorithmsServer.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,12 +65,13 @@ namespace AlgorithmsServer
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+            app.ConfigureCustomExceptionMiddleware();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Zomato API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AES API V1");
 
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = string.Empty;
