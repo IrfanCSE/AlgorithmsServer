@@ -499,6 +499,8 @@ class AES:
 
 # ms = AES.Call("strin","1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4",1)
 # print(ms)
+# msg = AES.CallImg("./Python/Images/b91c90b0-9c5d-4b1b-a47d-20eab048abf6_1c3d08a4-9fa1-4bfc-bfa9-2f25025f51cb.jpeg","enc.png","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",3)
+# print(msg)
 
-# msg = AES.CallImg("./Python/Images/acb46dcd-ce3d-46d6-b935-0053e695e321_Screenshot from 2021-05-20 18-33-23.png","enc.png","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",3)
+# msg = AES.CallImg("./Python/Images/enc.png","dec.png","1 2 3 4 5 6 7 8 1 2 3 4 5 6 7 8",4)
 # print(msg)

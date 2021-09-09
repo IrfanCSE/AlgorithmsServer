@@ -111,7 +111,7 @@ namespace AlgorithmsServer.Controllers
                     encImg.Delete();
                 }
 
-                return File(getImage, "multipart/form-data");
+                return File(getImage, "multipart/form-data",name);
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace AlgorithmsServer.Controllers
                     encImg.Delete();
                 }
 
-                return File(getImage, "multipart/form-data");
+                return File(getImage, "multipart/form-data",name);
             }
             catch (Exception ex)
             {
